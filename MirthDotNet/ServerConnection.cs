@@ -35,25 +35,66 @@ namespace MirthDotNet
 
         public string ExecutPostMethod(string servletName, IEnumerable<KeyValuePair<string, string>> data)
         {
-            var task = ExecutPostMethodAsync(servletName, data);
-            if (task.Wait(timeout))
+            var result = PostAsync(servletName, data);
+            if (result.StatusCode != HttpStatusCode.OK)
             {
-                return task.Result.Trim();
+                throw new Exception(result.StatusCode.ToString() + " " + ReadContentFromResult(result));
+                //what?
             }
-            else
+            return ReadContentFromResult(result);
+        }
+
+        private HttpResponseMessage PostAsync(string servletName, IEnumerable<KeyValuePair<string, string>> data)
+        {
+            var content = new FormUrlEncodedContent(data);
+            var task = this.webClient.PostAsync(servletName, content);
+            try
             {
-                throw new TimeoutException("ExecutPostMethodAsync Timeout");
+                if (task.Wait(timeout))
+                {
+                    return task.Result;
+                }
+                else
+                {
+                    throw new TimeoutException("PostAsync Timeout");
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Count == 1)
+                {
+                    var ex = e.InnerException;
+                    ex.PreserveStackTrace();
+                    throw ex;
+                }
+                throw;
             }
         }
 
-        public async Task<string> ExecutPostMethodAsync(string servletName, IEnumerable<KeyValuePair<string, string>> data)
+        private string ReadContentFromResult(HttpResponseMessage result)
         {
-            var content = new FormUrlEncodedContent(data);
-            var result = await this.webClient.PostAsync(servletName, content);
-            return await result.Content.ReadAsStringAsync();
-
-            //var response = this.webClient.PostAsync(servletName, "POST", data);
-            //return Encoding.UTF8.GetString(response).Trim();
+            var task = result.Content.ReadAsStringAsync();
+            try
+            {
+                if (task.Wait(timeout))
+                {
+                    return task.Result;
+                }
+                else
+                {
+                    throw new TimeoutException("ReadContentFromResult Timeout");
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Count == 1)
+                {
+                    var ex = e.InnerException;
+                    ex.PreserveStackTrace();
+                    throw ex;
+                }
+                throw;
+            }
         }
     }
 }
