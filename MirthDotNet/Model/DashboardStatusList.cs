@@ -13,5 +13,11 @@ namespace MirthDotNet.Model
     {
         [XmlElement("dashboardStatus")]
         public List<DashboardStatus> DashboardStatuses { get; set; }
+
+        /// <summary>
+        /// Deprecated in Mirth 3.x
+        /// </summary>
+        [XmlElement("channelStatus")]
+        public List<DashboardStatus> ChannelStatuses { get; set; }
     }
 }

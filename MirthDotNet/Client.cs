@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using MirthDotNet.Model;
+using MirthDotNet.Plugins;
 
 namespace MirthDotNet
 {
@@ -26,21 +27,15 @@ namespace MirthDotNet
         public const string EXTENSION_SERVLET = "/extensions";
         public const string ENGINE_SERVLET = "/engine";
 
-        public Client(string address)
+        public Client(string address, int timeout = ServerConnection.DefaultTimeout)
         {
             this.address = address;
-            this.connection = new ServerConnection(address);
-        }
-
-        public Client(string address, int timeout)
-        {
-            this.address = address;
-            this.timeout = timeout;
             this.connection = new ServerConnection(address, timeout);
+            this.ServerLog = new ServerLog(this);
+            this.DashboardConnectorStatus = new DashboardConnectorStatus(this);
         }
 
         private readonly string address;
-        private readonly int timeout;
         private readonly ServerConnection connection;
 
         private XmlSerializer GetSerializer<T>()
@@ -116,6 +111,15 @@ namespace MirthDotNet
             return ToObject<DashboardStatusList>(r);
         }
 
+        public ChannelStatistics GetStatistics(string channelId)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.CHANNEL_STATS_GET.Name);
+            data.Add("id", channelId);
+            var r = connection.ExecutPostMethod(CHANNEL_STATISTICS_SERVLET, data);
+            return ToObject<ChannelStatistics>(r);
+        }
+
         public ServerSettings GetServerSettings()
         {
             var data = new Parameters();
@@ -132,5 +136,31 @@ namespace MirthDotNet
             var r = connection.ExecutPostMethod(TEMPLATE_SERVLET, data);
             return r;
         }
+
+        public string InvokePluginMethod(string pluginName, string method, string parameters)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.PLUGIN_SERVICE_INVOKE.Name);
+            data.Add("name", pluginName);
+            data.Add("method", method);
+            if (parameters == null)
+            {
+                data.Add("object", "<null/>");
+            }
+            else
+            {
+                data.Add("object", parameters);
+            }
+            var r = connection.ExecutPostMethod(EXTENSION_SERVLET, data);
+            return r;
+        }
+
+        public T InvokePluginMethod<T>(string pluginName, string method, string parameters)
+        {
+            return ToObject<T>(InvokePluginMethod(pluginName, method, parameters));
+        }
+
+        public ServerLog ServerLog { get; private set; }
+        public DashboardConnectorStatus DashboardConnectorStatus { get; private set; }
     }
 }

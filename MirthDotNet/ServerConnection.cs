@@ -15,12 +15,9 @@ namespace MirthDotNet
     /// </remarks>
     public class ServerConnection
     {
-        public ServerConnection(string address)
-            : this(address, 30 * 1000)
-        {
-        }
+        public const int DefaultTimeout = (30 * 1000);
 
-        public ServerConnection(string address, int timeout)
+        public ServerConnection(string address, int timeout = DefaultTimeout)
         {
             this.address = address;
             this.timeout = timeout;

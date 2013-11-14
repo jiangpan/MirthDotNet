@@ -8,9 +8,17 @@ namespace MirthDotNet.Model
     [Serializable]
     public class MirthDateTime
     {
+        public static readonly DateTime UnixEpoch = new DateTime(1970,1,1,0,0,0,0);
+
         public long time { get; set; }
         public string timezone { get; set; }
 
-        public DateTime DateTime { get { return new DateTime(time); } }
+        public DateTime DateTime
+        {
+            get
+            {
+                return UnixEpoch.AddMilliseconds(time).ToLocalTime();
+            }
+        }
     }
 }

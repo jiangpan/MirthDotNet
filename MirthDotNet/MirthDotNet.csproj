@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ChannelStatistics.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="MetaDataColumn.cs" />
@@ -55,9 +56,13 @@
     <Compile Include="Model\DeployedState.cs" />
     <Compile Include="Model\LoginStatus.cs" />
     <Compile Include="Model\MirthDateTime.cs" />
+    <Compile Include="Model\MirthLinkedList.cs" />
+    <Compile Include="Model\MirthStringArray.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Parameters.cs" />
+    <Compile Include="Plugins\DashboardConnectorStatus.cs" />
+    <Compile Include="Plugins\ServerLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConnection.cs" />
