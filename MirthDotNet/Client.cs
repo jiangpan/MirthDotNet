@@ -66,11 +66,11 @@ namespace MirthDotNet
             return ToObject<LoginStatus>(connection.ExecutPostMethod(USER_SERVLET, data));
         }
 
-        public string Logout()
+        public void Logout()
         {
             var data = new Parameters();
-            data.Add("op", Operations.USER_PREFERENCES_GET.Name);
-            return connection.ExecutPostMethod(USER_SERVLET, data);
+            data.Add("op", Operations.USER_LOGOUT.Name);
+            connection.ExecutPostMethod(USER_SERVLET, data);
         }
 
         public string GetServerId()
@@ -114,6 +114,23 @@ namespace MirthDotNet
             data.Add("op", Operations.CHANNEL_GET_STATUS.Name);
             var r = connection.ExecutPostMethod(CHANNEL_STATUS_SERVLET, data);
             return ToObject<DashboardStatusList>(r);
+        }
+
+        public ServerSettings GetServerSettings()
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.CONFIGURATION_SERVER_SETTINGS_GET.Name);
+            var r = connection.ExecutPostMethod(CONFIGURATION_SERVLET, data);
+            return ToObject<ServerSettings>(r);
+        }
+
+        public string GetCodeTemplate()
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.CODE_TEMPLATE_GET.Name);
+            data.Add("codeTemplate", "");
+            var r = connection.ExecutPostMethod(TEMPLATE_SERVLET, data);
+            return r;
         }
     }
 }

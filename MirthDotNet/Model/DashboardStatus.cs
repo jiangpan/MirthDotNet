@@ -20,8 +20,7 @@ namespace MirthDotNet.Model
         public string name;
         public DeployedState state;
         public int deployedRevisionDelta;
-        //public DateTime deployedDate;
-        public string deployedDate;
+        public MirthDateTime deployedDate;
         //"com.mirth.connect.donkey.model.message.Status"
         //public Dictionary<Status, long> statistics;
         //public Dictionary<Status, long> lifetimeStatistics;
