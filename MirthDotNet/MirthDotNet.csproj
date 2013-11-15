@@ -51,6 +51,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="MetaDataColumn.cs" />
+    <Compile Include="Model\MirthMap.cs" />
     <Compile Include="Model\DashboardStatus.cs" />
     <Compile Include="Model\DashboardStatusList.cs" />
     <Compile Include="Model\DeployedState.cs" />

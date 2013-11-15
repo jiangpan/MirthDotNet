@@ -21,9 +21,9 @@ namespace MirthDotNet.Plugins
         private static readonly string REMOVE_SESSIONID = "removeSessionId";
         private static readonly string DASHBOARD_SERVICE_PLUGINPOINT = "Dashboard Connector Service";
 
-        public string GetStates()
+        public MirthMap GetStates()
         {
-            return this.client.InvokePluginMethod(DASHBOARD_SERVICE_PLUGINPOINT, GET_STATES, null);
+            return this.client.InvokePluginMethod<MirthMap>(DASHBOARD_SERVICE_PLUGINPOINT, GET_STATES, null);
         }
 
         public bool ChannelsDeployed()
