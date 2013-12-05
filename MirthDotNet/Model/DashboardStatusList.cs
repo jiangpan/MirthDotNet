@@ -11,6 +11,12 @@ namespace MirthDotNet.Model
     [XmlRoot("list")]
     public class DashboardStatusList
     {
+        public DashboardStatusList()
+        {
+            this.DashboardStatuses = new List<DashboardStatus>();
+            this.ChannelStatuses = new List<DashboardStatus>();
+        }
+
         [XmlElement("dashboardStatus")]
         public List<DashboardStatus> DashboardStatuses { get; set; }
 

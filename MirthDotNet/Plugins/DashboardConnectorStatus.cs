@@ -21,9 +21,9 @@ namespace MirthDotNet.Plugins
         private static readonly string REMOVE_SESSIONID = "removeSessionId";
         private static readonly string DASHBOARD_SERVICE_PLUGINPOINT = "Dashboard Connector Service";
 
-        public MirthMap GetStates()
+        public MirthMap<MirthMapDashboardConnectorStateItem> GetStates()
         {
-            return this.client.InvokePluginMethod<MirthMap>(DASHBOARD_SERVICE_PLUGINPOINT, GET_STATES, null);
+            return this.client.InvokePluginMethod<MirthMap<MirthMapDashboardConnectorStateItem>>(DASHBOARD_SERVICE_PLUGINPOINT, GET_STATES, null);
         }
 
         public bool ChannelsDeployed()
@@ -35,9 +35,13 @@ namespace MirthDotNet.Plugins
             return bool.Parse(r);
         }
 
-        public MirthLinkedList GetConnectionInfoLogs(string channelName = null)
+        public MirthLinkedList GetConnectionInfoLogs(string channelId = null)
         {
-            return this.client.InvokePluginMethod<MirthLinkedList>(DASHBOARD_SERVICE_PLUGINPOINT, GET_CONNECTION_INFO_LOGS, channelName);
+            if (!string.IsNullOrWhiteSpace(channelId))
+            {
+                channelId = "<string>" + channelId.Trim() + "</string>";
+            }
+            return this.client.InvokePluginMethod<MirthLinkedList>(DASHBOARD_SERVICE_PLUGINPOINT, GET_CONNECTION_INFO_LOGS, channelId);
         }
 
         public void RemoveSessionid()

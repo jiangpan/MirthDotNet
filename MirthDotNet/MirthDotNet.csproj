@@ -51,6 +51,14 @@
     <Compile Include="Client.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="MetaDataColumn.cs" />
+    <Compile Include="Model\MessageList.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\MessageFilter.cs" />
+    <Compile Include="Model\MetaDataColumnList.cs" />
+    <Compile Include="Model\DashboardConnectorState.cs" />
+    <Compile Include="Model\MetaDataColumn.cs" />
+    <Compile Include="Model\MirthLinkedHashMap.cs" />
+    <Compile Include="Model\MirthLinkedHashSet.cs" />
     <Compile Include="Model\MirthMap.cs" />
     <Compile Include="Model\DashboardStatus.cs" />
     <Compile Include="Model\DashboardStatusList.cs" />

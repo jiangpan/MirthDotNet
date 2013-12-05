@@ -16,20 +16,42 @@ namespace MirthDotNet.Model
             CHANNEL, CHAIN, SOURCE_CONNECTOR, DESTINATION_CONNECTOR
         };
 
-        public string channelId;
-        public string name;
-        public DeployedState state;
-        public int deployedRevisionDelta;
-        public MirthDateTime deployedDate;
-        //"com.mirth.connect.donkey.model.message.Status"
-        //public Dictionary<Status, long> statistics;
-        //public Dictionary<Status, long> lifetimeStatistics;
-        public List<DashboardStatus> childStatuses = new List<DashboardStatus>();
-        public int metaDataId;
-        public bool queueEnabled;
-        public long queued = 0l;
-        public bool waitForPrevious = false;
-        public HashSet<String> tags = new HashSet<String>();
-        public StatusTypeEnum statusType;
+        [XmlElement("channelId")]
+        public string ChannelId;
+        [XmlElement("name")]
+        public string Name { get; set; }
+        [XmlElement("state")]
+        public DeployedState State;
+        [XmlElement("deployedRevisionDelta")]
+        public int DeployedRevisionDelta;
+        [XmlElement("deployedDate")]
+        public MirthDateTime DeployedDate;
+        [XmlArray("statistics"), XmlArrayItem("entry")]
+        public List<StatisticsEntry> Statistics;
+        [XmlArray("lifetimeStatistics"), XmlArrayItem("entry")]
+        public List<StatisticsEntry> KifetimeStatistics;
+        [XmlElement("childStatuses")]
+        public DashboardStatusList ChildStatuses = new DashboardStatusList();
+        [XmlElement("metaDataId")]
+        public int MetaDataId;
+        [XmlElement("queueEnabled")]
+        public bool QueueEnabled;
+        [XmlElement("queued")]
+        public long Queued = 0l;
+        [XmlElement("waitForPrevious")]
+        public bool WaitForPrevious = false;
+        [XmlArray("tags"), XmlArrayItem("string")]
+        public HashSet<string> Tags = new HashSet<string>();
+        [XmlElement("statusType")]
+        public StatusTypeEnum StatusType;
+
+        [XmlRoot("entry")]
+        public class StatisticsEntry
+        {
+            [XmlElement("com.mirth.connect.donkey.model.message.Status")]
+            public string Name { get; set; }
+            [XmlElement("long")]
+            public long Count { get; set; }
+        }
     }
 }

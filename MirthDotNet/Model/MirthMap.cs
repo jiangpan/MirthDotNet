@@ -8,10 +8,10 @@ namespace MirthDotNet.Model
 {
     [Serializable]
     [XmlRoot("map")]
-    public class MirthMap
+    public class MirthMap<TEntry>
     {
         [XmlElement("entry")]
-        public MirthMapItem[] MirthMapItem { get; set; }
+        public TEntry[] MirthMapItem { get; set; }
     }
 
     [Serializable]
@@ -22,5 +22,15 @@ namespace MirthDotNet.Model
         public string Key { get; set; }
         [XmlElement("string-array")]
         public MirthStringArray Value { get; set; }
+    }
+
+    [Serializable]
+    [XmlRoot("entry")]
+    public class MirthMapDashboardConnectorStateItem
+    {
+        [XmlElement("string")]
+        public string Key { get; set; }
+        [XmlElement("object-array")]
+        public DashboardConnectorState Value { get; set; }
     }
 }
