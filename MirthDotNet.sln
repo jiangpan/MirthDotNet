@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MirthDotNet", "MirthDotNet.csproj", "{211B2FEA-5FD1-4B3C-9AB9-5616B5ED65D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MirthDotNet", "MirthDotNet\MirthDotNet.csproj", "{211B2FEA-5FD1-4B3C-9AB9-5616B5ED65D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MirthDotNet.Run", "MirthDotNet.Run\MirthDotNet.Run.csproj", "{0D6524CF-E2ED-4C20-9D20-D4A0C5EB7801}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{211B2FEA-5FD1-4B3C-9AB9-5616B5ED65D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{211B2FEA-5FD1-4B3C-9AB9-5616B5ED65D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{211B2FEA-5FD1-4B3C-9AB9-5616B5ED65D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D6524CF-E2ED-4C20-9D20-D4A0C5EB7801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D6524CF-E2ED-4C20-9D20-D4A0C5EB7801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D6524CF-E2ED-4C20-9D20-D4A0C5EB7801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D6524CF-E2ED-4C20-9D20-D4A0C5EB7801}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

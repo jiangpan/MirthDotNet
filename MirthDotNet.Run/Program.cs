@@ -28,7 +28,7 @@ namespace MirthDotNet
             //var codeTemplates = client.GetCodeTemplate();
             //var stats = channelStatusList.Select(x => client.GetStatistics(x.ChannelId)).ToArray();
             //var log = client.ServerLog.GetServerLogs();
-           //// var connectionLog = client.DashboardConnectorStatus.GetConnectionInfoLogs();
+            //// var connectionLog = client.DashboardConnectorStatus.GetConnectionInfoLogs();
             //var connectionLog_channel = client.DashboardConnectorStatus.GetConnectionInfoLogs("POC - Inbound NEW");
             var channelId = chan.ChannelId;
             var connectorNames = client.GetConnectorNames(channelId);
