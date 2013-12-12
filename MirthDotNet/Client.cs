@@ -38,6 +38,22 @@ namespace MirthDotNet
         private readonly string address;
         private readonly ServerConnection connection;
 
+        public string AuthenticationSessionId
+        {
+            get
+            {
+                if (connection.AuthenticationCookie != null)
+                {
+                    return connection.AuthenticationCookie.Value;
+                }
+                return string.Empty;
+            }
+            set
+            {
+                connection.SetNewAuthenticationCookie(value);
+            }
+        }
+
         private XmlSerializer GetSerializer<T>()
         {
             return new XmlSerializer(typeof(T));
@@ -81,6 +97,7 @@ namespace MirthDotNet
             var data = new Parameters();
             data.Add("op", Operations.USER_LOGOUT.Name);
             connection.ExecutPostMethod(USER_SERVLET, data);
+            connection.ClearAuthenticationCookie();
         }
 
         /// <summary>

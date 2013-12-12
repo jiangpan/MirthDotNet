@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
-using System.Net.Cache;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace MirthDotNet
 {
@@ -16,81 +14,80 @@ namespace MirthDotNet
     public class ServerConnection
     {
         public const int DefaultTimeout = (30 * 1000);
+        private const string AuthCookieName = "JSESSIONID";
 
         public ServerConnection(string address, int timeout = DefaultTimeout)
         {
             this.address = address;
             this.timeout = timeout;
 
-            this.webClient = new HttpClient();
-            this.webClient.BaseAddress = new Uri(address);
+            this.baseAddress = new Uri(address);
         }
 
         private readonly string address;
         private readonly int timeout;
-        private readonly HttpClient webClient;
+        private readonly Uri baseAddress;
+
+        public Cookie AuthenticationCookie { get; private set; }
+
+        public void SetNewAuthenticationCookie(string sessionId)
+        {
+            AuthenticationCookie = new Cookie(AuthCookieName, sessionId, "/", this.baseAddress.Host);
+        }
+
+        public void ClearAuthenticationCookie()
+        {
+            AuthenticationCookie = null;
+        }
 
         public string ExecutPostMethod(string servletName, IEnumerable<KeyValuePair<string, string>> data)
         {
-            var result = PostAsync(servletName, data);
-            if (result.StatusCode != HttpStatusCode.OK)
+            var uri = new Uri(this.baseAddress, servletName);
+            if (!MirthCertificateHandler.HostWhiteListContains(uri.Host))
             {
-                throw new Exception(result.StatusCode.ToString() + " " + ReadContentFromResult(result));
+                MirthCertificateHandler.AddHostToWhiteList(uri.Host);
+            }
+            var request = (HttpWebRequest)HttpWebRequest.Create(uri);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.UserAgent = "Clearwave WebAccess";
+            request.CookieContainer = new CookieContainer();
+            if (AuthenticationCookie != null)
+            {
+                request.CookieContainer.Add(AuthenticationCookie);
+            }
+            var postData = new StringBuilder();
+            foreach (var item in data)
+            {
+                postData.Append(item.Key + "=" + HttpUtility.UrlEncode(item.Value) + "&");
+            }
+            postData.Remove(postData.Length - 1, 1);
+            var postDataBuffer = Encoding.UTF8.GetBytes(postData.ToString());
+            request.ContentLength = postDataBuffer.Length;
+            using (var dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(postDataBuffer, 0, postDataBuffer.Length);
+            }
+            var response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception(response.StatusCode.ToString() + " " + ReadContentFromResult(response));
                 //what?
             }
-            return ReadContentFromResult(result);
+            var cookies = response.Cookies;
+            if (cookies[AuthCookieName] != null)
+            {
+                this.AuthenticationCookie = cookies[AuthCookieName];
+            }
+            var resultString = ReadContentFromResult(response);
+            return resultString;
         }
 
-        private HttpResponseMessage PostAsync(string servletName, IEnumerable<KeyValuePair<string, string>> data)
+        private static string ReadContentFromResult(HttpWebResponse response)
         {
-            var content = new FormUrlEncodedContent(data);
-            var task = this.webClient.PostAsync(servletName, content);
-            try
+            using (var reader = new StreamReader(response.GetResponseStream()))
             {
-                if (task.Wait(timeout))
-                {
-                    return task.Result;
-                }
-                else
-                {
-                    throw new TimeoutException("PostAsync Timeout");
-                }
-            }
-            catch (AggregateException e)
-            {
-                if (e.InnerExceptions.Count == 1)
-                {
-                    var ex = e.InnerException;
-                    ex.PreserveStackTrace();
-                    throw ex;
-                }
-                throw;
-            }
-        }
-
-        private string ReadContentFromResult(HttpResponseMessage result)
-        {
-            var task = result.Content.ReadAsStringAsync();
-            try
-            {
-                if (task.Wait(timeout))
-                {
-                    return task.Result;
-                }
-                else
-                {
-                    throw new TimeoutException("ReadContentFromResult Timeout");
-                }
-            }
-            catch (AggregateException e)
-            {
-                if (e.InnerExceptions.Count == 1)
-                {
-                    var ex = e.InnerException;
-                    ex.PreserveStackTrace();
-                    throw ex;
-                }
-                throw;
+                return reader.ReadToEnd();
             }
         }
     }
