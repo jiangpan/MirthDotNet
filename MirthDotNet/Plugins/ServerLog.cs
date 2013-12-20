@@ -21,12 +21,19 @@ namespace MirthDotNet.Plugins
 
         public MirthLinkedList GetServerLogs()
         {
-            return this.client.InvokePluginMethod < MirthLinkedList>(SERVER_PLUGIN_NAME, GET_SERVER_LOGS, null);
+            return this.client.InvokePluginMethod<MirthLinkedList>(SERVER_PLUGIN_NAME, GET_SERVER_LOGS, null);
         }
 
-        public void RemoveSessionid()
+        public void RemoveSessionId()
         {
             this.client.InvokePluginMethod(SERVER_PLUGIN_NAME, REMOVE_SESSIONID, null);
+        }
+
+        public MirthLinkedList GetServerLogsAndRemoveSessionId()
+        {
+            var logs = this.GetServerLogs();
+            this.RemoveSessionId();
+            return logs;
         }
     }
 }

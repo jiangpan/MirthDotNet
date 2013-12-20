@@ -29,7 +29,7 @@ namespace MirthDotNet.Model
         [XmlArray("statistics"), XmlArrayItem("entry")]
         public List<StatisticsEntry> Statistics;
         [XmlArray("lifetimeStatistics"), XmlArrayItem("entry")]
-        public List<StatisticsEntry> KifetimeStatistics;
+        public List<StatisticsEntry> LifetimeStatistics;
         [XmlElement("childStatuses")]
         public DashboardStatusList ChildStatuses = new DashboardStatusList();
         [XmlElement("metaDataId")]

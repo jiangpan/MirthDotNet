@@ -16,13 +16,5 @@ namespace MirthDotNet.Model
         public long sent { get; set; }
         public long error { get; set; }
         public long filtered { get; set; }
-        /// <summary>
-        /// Deprecated in Mirth 3.x?
-        /// </summary>
-        public int queued { get; set; }
-        /// <summary>
-        /// Deprecated in Mirth 3.x?
-        /// </summary>
-        public int alerted { get; set; }
     }
 }

@@ -12,10 +12,6 @@ namespace MirthDotNet
     {
         public bool clearGlobalMap { get; set; }
         public int queueBufferSize { get; set; }
-        /// <summary>
-        /// deprecated in Mirth 3.0
-        /// </summary>
-        public int maxQueueSize { get; set; }
         public List<MetaDataColumn> defaultMetaDataColumns { get; set; }
 
         // SMTP
