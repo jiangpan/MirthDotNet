@@ -14,7 +14,7 @@ namespace MirthDotNet
     /// </remarks>
     public class ServerConnection
     {
-        public const int DefaultTimeout = (30 * 1000);
+        public const int DefaultTimeout = (100 * 1000);
         private const string AuthCookieName = "JSESSIONID";
 
         public ServerConnection(string address, int timeout = DefaultTimeout)
@@ -56,6 +56,7 @@ namespace MirthDotNet
                 }
                 var request = (HttpWebRequest)HttpWebRequest.Create(uri);
                 request.Method = "POST";
+                request.Timeout = this.timeout;
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.UserAgent = "Clearwave WebAccess";
                 request.CookieContainer = new CookieContainer();
