@@ -19,16 +19,17 @@ namespace MirthDotNet
         private static RemoteCertificateValidationCallback originalCallback;
         public static bool HandleCert(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
+            bool originalCallbackResult = false;
             if (originalCallback != null)
             {
-                var originalCallbackResult = originalCallback(sender, certificate, chain, sslPolicyErrors);
+                originalCallbackResult = originalCallback(sender, certificate, chain, sslPolicyErrors);
             }
             if (sender is HttpWebRequest)
             {
                 var uri = ((HttpWebRequest)sender).RequestUri;
                 return HostWhiteListContains(uri.Host);
             }
-            return false;
+            return originalCallbackResult;
         }
         private static readonly ReaderWriterLockSlim hostWhiteListLock = new ReaderWriterLockSlim();
         private static readonly HashSet<string> hostWhiteList = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
