@@ -14,6 +14,16 @@ namespace MirthDotNet
             // This will disable SSL certificate validation but useful for dev environments
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
+            var channelId = "d24f9ca7-d696-4ffd-b86e-484669213fa8";
+            var maxMessageId = client.GetMaxMessageId(channelId);
+            var filter = new MessageFilter()
+            {
+                MaxMessageId = maxMessageId,
+                Statuses = new List<string>() { "ERROR" },
+                EndDate = new DateTime(2014, 02, 05),
+            };
+            var messages = client.GetMessages(channelId, filter, includeContent: false, offset: 0, limit: 10);
+            var messageCount = client.GetMessageCount(channelId, filter);
             var client = new Client("https://localhost:8443");
             var loginStatus = client.Login("admin", "admin", "0.0.0");
             //var serverId = client.GetServerId();
