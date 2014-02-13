@@ -19,6 +19,15 @@ namespace MirthDotNet.Model
             {
                 return UnixEpoch.AddMilliseconds(time).ToLocalTime();
             }
+            set
+            {
+                time =
+                    (long)
+                    (DateTime.SpecifyKind(value, DateTimeKind.Unspecified) -
+                     DateTime.SpecifyKind(UnixEpoch, DateTimeKind.Unspecified))
+                    .TotalMilliseconds;
+                timezone = "America/New_York"; // hard coded :(
+            }
         }
     }
 }

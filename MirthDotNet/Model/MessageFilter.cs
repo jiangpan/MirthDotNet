@@ -17,5 +17,31 @@ namespace MirthDotNet.Model
         public bool Attachment { get; set; }
         [XmlElement("error")]
         public bool Error { get; set; }
+
+        [XmlElement("startDate")]
+        public MirthDateTime startDate { get; set; }
+        [XmlIgnore()]
+        public DateTime StartDate
+        {
+            set
+            {
+                startDate = new MirthDateTime();
+                startDate.DateTime = value;
+            }
+        }
+        [XmlElement("endDate")]
+        public MirthDateTime endDate { get; set; }
+        [XmlIgnore()]
+        public DateTime EndDate
+        {
+            set
+            {
+                endDate = new MirthDateTime();
+                endDate.DateTime = value;
+            }
+        }
+
+        [XmlArray("statuses"), XmlArrayItem("com.mirth.connect.donkey.model.message.Status")]
+        public List<string> Statuses;
     }
 }

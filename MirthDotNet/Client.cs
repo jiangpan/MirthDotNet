@@ -254,6 +254,31 @@ namespace MirthDotNet
             return ToObject<MessageList>(r);
         }
 
+        /// <summary>
+        /// Returns a count of messages for a given channel matching a filter
+        /// </summary>
+        public long GetMessageCount(string channelId, MessageFilter filter)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.MESSAGE_GET_COUNT.Name);
+            data.Add("channelId", channelId);
+            data.Add("filter", FromObject<MessageFilter>(filter));
+            var r = connection.ExecutPostMethod(MESSAGE_SERVLET, data);
+            return long.Parse(r);
+        }
+
+        /// <summary>
+        /// Removes a set of messages for a given channel matching a filter
+        /// </summary>
+        public void RemoveMessages(string channelId, MessageFilter filter)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.MESSAGE_REMOVE.Name);
+            data.Add("channelId", channelId);
+            data.Add("filter", FromObject<MessageFilter>(filter));
+            var r = connection.ExecutPostMethod(MESSAGE_SERVLET, data);
+        }
+
         public string InvokePluginMethod(string pluginName, string method, string parameters)
         {
             var data = new Parameters();
