@@ -10,6 +10,12 @@ namespace MirthDotNet.Model
     [XmlRoot("linked-hash-set")]
     public class MirthLinkedHashSet
     {
+        public MirthLinkedHashSet() { }
+        public MirthLinkedHashSet(HashSet<string> items)
+        {
+            this.Items = items;
+        }
+
         [XmlElement("string")]
         public HashSet<string> Items { get; set; }
     }

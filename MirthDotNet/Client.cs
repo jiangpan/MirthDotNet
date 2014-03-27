@@ -161,6 +161,44 @@ namespace MirthDotNet
             return ToObject<DashboardStatusList>(r);
         }
 
+        public ChannelSummaryList GetChannelSummary()
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.CHANNEL_GET_SUMMARY.Name);
+            data.Add("cachedChannels", "<map/>");
+            var r = connection.ExecutPostMethod(CHANNEL_SERVLET, data);
+            return ToObject<ChannelSummaryList>(r);
+        }
+
+        /// <summary>
+        /// Returns a list of channels matching the specified input. If empty, returns
+        /// all channels.
+        /// </summary>
+        public ChannelList GetChannels(params string[] channelIds)
+        {
+            return GetChannels(new HashSet<string>(channelIds ?? new string[0]));
+        }
+
+        /// <summary>
+        /// Returns a list of channels matching the specified input. If empty, returns
+        /// all channels.
+        /// </summary>
+        public ChannelList GetChannels(HashSet<string> channelIds)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.CHANNEL_GET.Name);
+            if (channelIds == null || channelIds.Count == 0)
+            {
+                data.Add("channelIds", "<null/>");
+            }
+            else
+            {
+                data.Add("channelIds", FromObject<MirthLinkedHashSet>(new MirthLinkedHashSet(channelIds)));
+            }
+            var r = connection.ExecutPostMethod(CHANNEL_SERVLET, data);
+            return ToObject<ChannelList>(r);
+        }
+
         public ChannelStatistics GetStatistics(string channelId)
         {
             var data = new Parameters();
