@@ -33,4 +33,14 @@ namespace MirthDotNet.Model
         [XmlElement("object-array")]
         public DashboardConnectorState Value { get; set; }
     }
+
+    [Serializable]
+    [XmlRoot("entry")]
+    public class MirthMapStringIntItem
+    {
+        [XmlElement("string")]
+        public string Key { get; set; }
+        [XmlElement("int")]
+        public int Int { get; set; }
+    }
 }
