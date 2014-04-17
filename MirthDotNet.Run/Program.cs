@@ -42,7 +42,7 @@ namespace MirthDotNet
                 Console.Write("{0} deployed with {1} connectors. ", item.Name.MaxOrPad(30), item.ChildStatuses.DashboardStatuses.Count);
                 var channelId = item.ChannelId;
                 var channel = client.GetChannels(channelId).Channels.Single();
-                var connectors = channel.GetAllEnabledChannels();
+                var connectors = channel.GetAllEnabledConnectors();
                 if (connectors.Count != item.ChildStatuses.DashboardStatuses.Count)
                 {
                     Console.Write("WARNING: Found {0} configured connectors!", connectors.Count);
@@ -64,7 +64,7 @@ namespace MirthDotNet
             {
                 try
                 {
-                    var channelId = channelSummaryList.Channels[i].Id;
+                    var channelId = channelSummaryList.Channels[i].GetChannelId();
                     Console.Write((i) + " ");
                     var maxMessageId = client.GetMaxMessageId(channelId);
                     if (maxMessageId == 0)
