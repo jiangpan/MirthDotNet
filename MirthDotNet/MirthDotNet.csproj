@@ -56,6 +56,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="MetaDataColumn.cs" />
+    <Compile Include="Model\ChannelStatus.cs" />
     <Compile Include="Model\ChannelSummary.cs" />
     <Compile Include="Model\ChannelSummaryList.cs" />
     <Compile Include="Model\ChannelList.cs" />

@@ -30,7 +30,7 @@ namespace MirthDotNet.Model
         [XmlArray("destinationConnectors"), XmlArrayItem("connector")]
         public Connector[] DestinationConnectors { get; set; }
 
-        public ReadOnlyCollection<Connector> GetAllEnabledChannels()
+        public ReadOnlyCollection<Connector> GetAllEnabledConnectors()
         {
             var list =new List<Connector>();
             list.Add(SourceConnector);
