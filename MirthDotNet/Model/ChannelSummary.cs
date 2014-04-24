@@ -10,13 +10,11 @@ namespace MirthDotNet.Model
     [XmlRoot("channelSummary")]
     public class ChannelSummary
     {
-        [Obsolete("Deprecated in 3.0.2")]
         [XmlElement("id")]
         public string Id { get; set; } // deprecated in 3.0.1
         [XmlElement("channelId")]
         public string ChannelId { get; set; }
         public string GetChannelId() { return !string.IsNullOrWhiteSpace(ChannelId) ? ChannelId : Id; }
-        [Obsolete("Deprecated in 3.0.2")]
         [XmlElement("added")]
         public string Added { get; set; }
         [XmlElement("deleted")]

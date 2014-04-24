@@ -19,6 +19,7 @@ namespace MirthDotNet
 
         public static void Main(string[] args)
         {
+            ListChannels();
             FindFailedToDeployConnectors();
             PurgeERRORMessages();
         }
@@ -94,6 +95,32 @@ namespace MirthDotNet
                 catch (Exception e)
                 {
                     Console.Write(" ERROR: " + e.Message);
+                }
+            }
+
+            client.Logout();
+        }
+
+        public static void ListChannels()
+        {
+            var client = new Client(ClientUrl, timeout: int.MaxValue);
+            var loginStatus = client.Login(ClientUsername, ClientPassword, "0.0.0");
+            var channelSummaryList = client.GetChannelSummary();
+
+            Console.WriteLine("Found " + channelSummaryList.Channels.Count + " channels...");
+            Console.WriteLine("Index^Channel Name^Description^Max Message Id^Revision^Enabled^Channel Id");
+            for (int i = 0; i < channelSummaryList.Channels.Count; i++)
+            {
+                try
+                {
+                    var channelId = channelSummaryList.Channels[i].GetChannelId();
+                    var maxMessageId = client.GetMaxMessageId(channelId);
+                    var channel = client.GetChannels(channelId).Channels.Single();
+                    Console.WriteLine(string.Format(@"{0}^{1}^{2}^{3}^{4}^{5}^{6}", i, channel.Name, channel.Description.Replace("\n", " "), maxMessageId, channel.Revision, channel.Enabled, channelId));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(" ERROR: " + e.Message);
                 }
             }
 
