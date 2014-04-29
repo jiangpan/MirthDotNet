@@ -59,7 +59,7 @@ namespace MirthDotNet.Model
             [XmlArray("metaDataMap"), XmlArrayItem("entry")]
             public List<MessageMetaDataMap> MessageMetaDataMap { get; set; }
 
-            [XmlElement("ErrorCode")]
+            [XmlElement("errorCode")]
             public int ErrorCode { get; set; }
             [XmlElement("sendAttempts")]
             public int SendAttempts { get; set; }
