@@ -299,6 +299,16 @@ namespace MirthDotNet
             return ToObject<MessageList>(r);
         }
 
+        public Message GetMessageContent(string channelId, long messageId)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.MESSAGE_GET_CONTENT.Name);
+            data.Add("channelId", channelId);
+            data.Add("messageId", "<long>" + messageId.ToString() + "</long>");
+            var r = connection.ExecutPostMethod(MESSAGE_SERVLET, data);
+            return ToObject<Message>(r);
+        }
+
         /// <summary>
         /// Returns a count of messages for a given channel matching a filter
         /// </summary>

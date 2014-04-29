@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 namespace MirthDotNet.Model
 {
+    [XmlRoot("message")]
     public class Message
     {
         public enum MessageStatusEnum
@@ -71,6 +72,34 @@ namespace MirthDotNet.Model
             public int ChainId { get; set; }
             [XmlElement("orderId")]
             public int OrderId { get; set; }
+
+            [XmlElement("raw")]
+            public MessageContent Raw { get; set; }
+            [XmlElement("encoded")]
+            public MessageContent Encoded { get; set; }
+            [XmlElement("sent")]
+            public MessageContent Sent { get; set; }
+            [XmlElement("response")]
+            public MessageContent Response { get; set; }
+        }
+
+        [Serializable]
+        public class MessageContent
+        {
+            [XmlElement("channelId")]
+            public string ChannelId { get; set; }
+            [XmlElement("messageId")]
+            public long MessageId { get; set; }
+            [XmlElement("metaDataId")]
+            public int MetaDataId { get; set; }
+            [XmlElement("contentType")]
+            public string ContentType { get; set; }
+            [XmlElement("content")]
+            public string Content { get; set; }
+            [XmlElement("dataType")]
+            public string DataType { get; set; }
+            [XmlElement("encrypted")]
+            public string Encrypted { get; set; }
         }
 
         [Serializable]
