@@ -12,7 +12,6 @@ namespace MirthDotNet.Model
     {
         [XmlElement("maxMessageId")]
         public long MaxMessageId { get; set; }
-        //<contentSearch/>
         [XmlElement("attachment")]
         public bool Attachment { get; set; }
         [XmlElement("error")]
@@ -43,5 +42,61 @@ namespace MirthDotNet.Model
 
         [XmlArray("statuses"), XmlArrayItem("com.mirth.connect.donkey.model.message.Status")]
         public List<string> Statuses;
+
+        [XmlArray("metaDataSearch"), XmlArrayItem("metaDataSearchCriteria")]
+        public List<MetaDataSearchCriteria> MetaDataSearch { get; set; }
+
+        [XmlElement("messageIdUpper")]
+        public long? MessageIdUpper { get; set; }
+        public bool ShouldSerializeMessageIdUpper() { return MessageIdUpper.HasValue; }
+        [XmlElement("messageIdLower")]
+        public long? MessageIdLower { get; set; }
+        public bool ShouldSerializeMessageIdLower() { return MessageIdLower.HasValue; }
+
+        /*
+         * 
+  <textSearch>asdf</textSearch>
+  <contentSearch>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>1</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>2</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>3</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>4</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>5</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>6</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>7</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+    <com.mirth.connect.model.filters.elements.ContentSearchElement>
+      <contentCode>8</contentCode>
+      <searches/>
+    </com.mirth.connect.model.filters.elements.ContentSearchElement>
+  </contentSearch>
+  <textSearchMetaDataColumns>
+    <string>SOURCE</string>
+    <string>TYPE</string>
+    <string>PATIENT_ID</string>
+    <string>PATIENT_LASTNAME</string>
+    <string>ENCOUNTER_ID</string>
+  </textSearchMetaDataColumns>
+         */
     }
 }
