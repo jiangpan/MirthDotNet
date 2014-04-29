@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="MirthCertificateHandler.cs" />
     <Compile Include="Model\Channel.cs" />
+    <Compile Include="Model\ChannelProperties.cs" />
     <Compile Include="Model\ChannelStatistics.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ExceptionExtensions.cs" />
