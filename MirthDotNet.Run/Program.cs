@@ -24,6 +24,49 @@ namespace MirthDotNet
             PurgeERRORMessages();
         }
 
+        public static void TestMessageSearch()
+        {
+            var client = new Client(ClientUrl, timeout: int.MaxValue);
+            try
+            {
+                var sw = Stopwatch.StartNew();
+                var loginStatus = client.Login(ClientUsername, ClientPassword, "0.0.0");
+                var channel = client.GetChannels("d24f9ca7-d696-4ffd-b86e-484669213fa8").Channels[0];
+                Console.WriteLine("Loaded Channel [{0}] in {1}ms ", channel.Name, sw.Elapsed.TotalMilliseconds.ToString("N2"));
+                Console.WriteLine("Found {0} metadata columns: {1}", channel.Properties.MetaDataColumns.Items.Count, string.Join(",", channel.Properties.MetaDataColumns.Items.Select(x => x.Name).ToArray()));
+                sw.Restart();
+                var maxMessageId = client.GetMaxMessageId(channel.Id);
+                var filter = new MessageFilter()
+                {
+                    MaxMessageId = maxMessageId,
+                    //Statuses = new List<string>() { "ERROR" },
+                    //EndDate = DateTime.Now.Date.AddDays(-7),
+                    MetaDataSearch = new List<MetaDataSearchCriteria>
+                    {
+                        new MetaDataSearchCriteria
+                        {
+                            ColumnName = "PATIENT_ID",
+                            Value = new MetaDataSearchCriteriaValue("00556249"),
+                            Operator = MetaDataSearchOperator.STARTS_WITH,
+                            IgnoreCase = "true",
+                        },
+                    },
+                    //MessageIdLower = 896930,
+                    //MessageIdUpper = 896930,
+                };
+                var messageCount = client.GetMessageCount(channel.Id, filter);
+                Console.WriteLine("Counted {0} messages in {1}ms", messageCount, sw.Elapsed.TotalMilliseconds.ToString("N2"));
+                sw.Restart();
+                var messages_nocontent = client.GetMessages(channel.Id, filter, false, 0, 51);
+                Console.WriteLine("Loaded {0} messages in {1}ms", messages_nocontent.Messages.Count, sw.Elapsed.TotalMilliseconds.ToString("N2"));
+                var messages_rows = messages_nocontent.Messages.SelectMany(x => x.AsFlatMessageRows()).ToArray();
+            }
+            finally
+            {
+                client.Logout();
+            }
+        }
+
         public static string MaxOrPad(this string input, int totalWidth)
         {
             if (input.Length > totalWidth)
