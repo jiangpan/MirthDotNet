@@ -12,6 +12,10 @@ namespace MirthDotNet.Model
     {
         [XmlElement("maxMessageId")]
         public long MaxMessageId { get; set; }
+        [XmlElement("minMessageId")]
+        public long? MinMessageId { get; set; }
+        public bool ShouldSerializeMinMessageId() { return MinMessageId.HasValue; }
+
         [XmlElement("attachment")]
         public bool Attachment { get; set; }
         [XmlElement("error")]
@@ -45,13 +49,6 @@ namespace MirthDotNet.Model
 
         [XmlArray("metaDataSearch"), XmlArrayItem("metaDataSearchCriteria")]
         public List<MetaDataSearchCriteria> MetaDataSearch { get; set; }
-
-        [XmlElement("messageIdUpper")]
-        public long? MessageIdUpper { get; set; }
-        public bool ShouldSerializeMessageIdUpper() { return MessageIdUpper.HasValue; }
-        [XmlElement("messageIdLower")]
-        public long? MessageIdLower { get; set; }
-        public bool ShouldSerializeMessageIdLower() { return MessageIdLower.HasValue; }
 
         /*
          * 

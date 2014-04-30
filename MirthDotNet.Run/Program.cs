@@ -51,8 +51,7 @@ namespace MirthDotNet
                             IgnoreCase = "true",
                         },
                     },
-                    //MessageIdLower = 896930,
-                    //MessageIdUpper = 896930,
+                    MinMessageId = 896930,
                 };
                 var messageCount = client.GetMessageCount(channel.Id, filter);
                 Console.WriteLine("Counted {0} messages in {1}ms", messageCount, sw.Elapsed.TotalMilliseconds.ToString("N2"));
