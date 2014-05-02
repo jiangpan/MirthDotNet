@@ -100,6 +100,15 @@ namespace MirthDotNet
             connection.ClearAuthenticationCookie();
         }
 
+        public UserList GetUser()
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.USER_GET.Name);
+            data.Add("user", "<null/>");
+            var r = connection.ExecutPostMethod(USER_SERVLET, data);
+            return ToObject<UserList>(r);
+        }
+
         /// <summary>
         /// Gets the unique Server ID for the Mirth Server.
         /// </summary>

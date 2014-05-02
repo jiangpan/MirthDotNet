@@ -81,6 +81,8 @@
     <Compile Include="Model\MirthDateTime.cs" />
     <Compile Include="Model\MirthLinkedList.cs" />
     <Compile Include="Model\MirthStringArray.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserList.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Parameters.cs" />
