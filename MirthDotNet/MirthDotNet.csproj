@@ -86,6 +86,9 @@
     <Compile Include="Operation.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Parameters.cs" />
+    <Compile Include="Plugins\ChannelHistory.cs" />
+    <Compile Include="Plugins\ChannelHistorySnapshot.cs" />
+    <Compile Include="Plugins\ChannelHistorySnapshotList.cs" />
     <Compile Include="Plugins\DashboardConnectorStatus.cs" />
     <Compile Include="Plugins\ServerLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
