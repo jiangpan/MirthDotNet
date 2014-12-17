@@ -88,6 +88,9 @@ namespace MirthDotNet
                     this.AuthenticationCookie = cookies[AuthCookieName];
                 }
                 var resultString = ReadContentFromResult(response);
+#if DEBUG
+                Debug.WriteLine("Result: " + resultString);
+#endif
                 return resultString;
             }
             finally

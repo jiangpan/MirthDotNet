@@ -81,6 +81,13 @@ namespace MirthDotNet.Model
             public MessageContent Sent { get; set; }
             [XmlElement("response")]
             public MessageContent Response { get; set; }
+
+            [XmlElement("processingErrorContent")]
+            public ErrorContent ProcessingErrorContent { get; set; }
+            [XmlElement("postProcessorErrorContent")]
+            public ErrorContent PostProcessorErrorContent { get; set; }
+            [XmlElement("responseErrorContent")]
+            public ErrorContent ResponseErrorContent { get; set; }
         }
 
         [Serializable]
@@ -98,6 +105,15 @@ namespace MirthDotNet.Model
             public string Content { get; set; }
             [XmlElement("dataType")]
             public string DataType { get; set; }
+            [XmlElement("encrypted")]
+            public string Encrypted { get; set; }
+        }
+
+        [Serializable]
+        public class ErrorContent
+        {
+            [XmlElement("content")]
+            public string Content { get; set; }
             [XmlElement("encrypted")]
             public string Encrypted { get; set; }
         }
