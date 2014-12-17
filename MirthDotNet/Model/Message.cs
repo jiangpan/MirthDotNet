@@ -88,6 +88,14 @@ namespace MirthDotNet.Model
             public ErrorContent PostProcessorErrorContent { get; set; }
             [XmlElement("responseErrorContent")]
             public ErrorContent ResponseErrorContent { get; set; }
+            [XmlElement("sourceMapContent")]
+            public MessageMapContent SourceMapContent { get; set; }
+            [XmlElement("connectorMapContent")]
+            public MessageMapContent ConnectorMapContent { get; set; }
+            [XmlElement("channelMapContent")]
+            public MessageMapContent ChannelMapContent { get; set; }
+            [XmlElement("responseMapContent")]
+            public MessageMapContent ResponseMapContent { get; set; }
         }
 
         [Serializable]
@@ -116,6 +124,38 @@ namespace MirthDotNet.Model
             public string Content { get; set; }
             [XmlElement("encrypted")]
             public string Encrypted { get; set; }
+        }
+
+        [Serializable]
+        public class MessageMapContent : IXmlSerializable
+        {
+            public string Content { get; set; }
+
+            public System.Xml.Schema.XmlSchema GetSchema()
+            {
+                return null;
+            }
+
+            public void ReadXml(System.Xml.XmlReader reader)
+            {
+                var localName = reader.Name;
+                this.Content = reader.ReadOuterXml();
+                return;
+                //return;
+                //while (reader.Read())
+                //{
+                //    if (reader.Name == localName && reader.NodeType == XmlNodeType.EndElement)
+                //    {
+                //        reader.Read();
+                //        break;
+                //    }
+                //}
+            }
+
+            public void WriteXml(System.Xml.XmlWriter writer)
+            {
+                throw new NotSupportedException();
+            }
         }
 
         [Serializable]
