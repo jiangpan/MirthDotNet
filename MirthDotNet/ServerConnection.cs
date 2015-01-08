@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace MirthDotNet
 {
@@ -42,6 +44,11 @@ namespace MirthDotNet
             AuthenticationCookie = null;
         }
 
+        public static bool HandleCert(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
         public string ExecutPostMethod(string servletName, IEnumerable<KeyValuePair<string, string>> data)
         {
             stopwatch.Stop();
@@ -50,16 +57,13 @@ namespace MirthDotNet
             try
             {
                 var uri = new Uri(this.baseAddress, servletName);
-                if (!MirthCertificateHandler.HostWhiteListContains(uri.Host))
-                {
-                    MirthCertificateHandler.AddHostToWhiteList(uri.Host);
-                }
                 var request = (HttpWebRequest)HttpWebRequest.Create(uri);
                 request.Method = "POST";
                 request.Timeout = this.timeout;
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.UserAgent = "Clearwave WebAccess";
                 request.CookieContainer = new CookieContainer();
+                request.ServerCertificateValidationCallback = HandleCert;
                 if (AuthenticationCookie != null)
                 {
                     request.CookieContainer.Add(AuthenticationCookie);
