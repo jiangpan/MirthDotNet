@@ -23,5 +23,13 @@ namespace MirthDotNet.Model
         public bool Enabled { get; set; }
         [XmlElement("waitForPrevious")]
         public bool WaitForPrevious { get; set; }
+
+        [XmlElement("properties")]
+        public ConnectorProperties Properties { get; set; }
+
+        [XmlElement("filter")]
+        public ConnectorFilter Filter { get; set; }
+        [XmlElement("transformer")]
+        public ConnectorTransformer Transformer { get; set; }
     }
 }

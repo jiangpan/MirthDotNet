@@ -33,6 +33,15 @@ namespace MirthDotNet.Model
         [XmlElement("properties")]
         public ChannelProperties Properties { get; set; }
 
+        [XmlElement("preprocessingScript")]
+        public string PreprocessingScript { get; set; }
+        [XmlElement("postprocessingScript")]
+        public string PostprocessingScript { get; set; }
+        [XmlElement("deployScript")]
+        public string DeployScript { get; set; }
+        [XmlElement("undeployScript")]
+        public string UndeployScript { get; set; }
+
         public ReadOnlyCollection<Connector> GetAllEnabledConnectors()
         {
             var list =new List<Connector>();

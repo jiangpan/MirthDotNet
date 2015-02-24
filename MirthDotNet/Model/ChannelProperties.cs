@@ -17,18 +17,20 @@ namespace MirthDotNet.Model
         [XmlElement("messageStorageMode")]
         public string MessageStorageMode { get; set; }
         [XmlElement("storeAttachments")]
-        public string StoreAttachments { get; set; }
+        public bool StoreAttachments { get; set; }
         [XmlElement("removeContentOnCompletion")]
-        public string RemoveContentOnCompletion { get; set; }
+        public bool RemoveContentOnCompletion { get; set; }
         [XmlElement("removeAttachmentsOnCompletion")]
-        public string RemoveAttachmentsOnCompletion { get; set; }
+        public bool RemoveAttachmentsOnCompletion { get; set; }
         [XmlElement("encryptData")]
-        public string EncryptData { get; set; }
+        public bool EncryptData { get; set; }
 
         [XmlElement("pruneMetaDataDays")]
-        public string PruneMetaDataDays { get; set; }
+        public int PruneMetaDataDays { get; set; }
+        [XmlElement("pruneContentDays")]
+        public int? PruneContentDays { get; set; }
         [XmlElement("archiveEnabled")]
-        public string ArchiveEnabled { get; set; }
+        public bool ArchiveEnabled { get; set; }
 
         [XmlElement("metaDataColumns")]
         public MetaDataColumnList MetaDataColumns { get; set; }

@@ -170,7 +170,7 @@ namespace MirthDotNet
             return ToObject<DashboardStatusList>(r);
         }
 
-        public ChannelSummaryList GetChannelSummary(params MirthMapStringIntItem[] cachedChannels)
+        public ChannelSummaryList GetChannelSummary(params MirthMapStringChannelHeaderItem[] cachedChannels)
         {
             var data = new Parameters();
             data.Add("op", Operations.CHANNEL_GET_SUMMARY.Name);
@@ -180,7 +180,7 @@ namespace MirthDotNet
             }
             else
             {
-                data.Add("cachedChannels", FromObject<MirthMap<MirthMapStringIntItem>>(new MirthMap<MirthMapStringIntItem>() { MirthMapItem = cachedChannels }));
+                data.Add("cachedChannels", FromObject<MirthMap<MirthMapStringChannelHeaderItem>>(new MirthMap<MirthMapStringChannelHeaderItem>() { MirthMapItem = cachedChannels }));
             }
             var r = connection.ExecutPostMethod(CHANNEL_SERVLET, data);
             return ToObject<ChannelSummaryList>(r);
