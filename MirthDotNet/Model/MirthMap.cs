@@ -53,4 +53,16 @@ namespace MirthDotNet.Model
         [XmlElement("channelHeader")]
         public ChannelHeader ChannelHeader { get; set; }
     }
+
+    [Serializable]
+    [XmlRoot("entry")]
+    public class MirthMapStringIntListItem
+    {
+        [XmlElement("string")]
+        public string Key { get; set; }
+        [XmlArray("list")]
+        [XmlArrayItem("int", Type = typeof(int))]
+        [XmlArrayItem("null", Type = typeof(string))]
+        public object[] Int { get; set; }
+    }
 }

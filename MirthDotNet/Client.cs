@@ -33,6 +33,7 @@ namespace MirthDotNet
             this.connection = new ServerConnection(address, timeout);
             this.ServerLog = new ServerLog(this);
             this.DashboardConnectorStatus = new DashboardConnectorStatus(this);
+            this.ChannelHistory = new ChannelHistory(this);
         }
 
         private readonly string address;
@@ -224,6 +225,31 @@ namespace MirthDotNet
             return ToObject<ChannelStatistics>(r);
         }
 
+        public string ClearStatistics(string channelId, IEnumerable<string> connectorIds, bool deleteReceived = true, bool deleteFiltered = true, bool deleteSent = true, bool deleteErrored = true)
+        {
+            var data = new Parameters();
+            data.Add("op", Operations.CHANNEL_STATS_CLEAR.Name);
+            var _map = new MirthMap<MirthMapStringIntListItem>()
+            {
+                MirthMapItem = new MirthMapStringIntListItem[]
+                {
+                    new MirthMapStringIntListItem()
+                    {
+                        Key = channelId,
+                        Int = new object[] { "", }.Concat(connectorIds.Select(x => (object)int.Parse(x))).ToArray(), // weird hack need to get <null /> into the list
+                    },
+                },
+            };
+            var map = FromObject<MirthMap<MirthMapStringIntListItem>>(_map);
+            data.Add("channelConnectorMap", map);
+            data.Add("deleteReceived", deleteReceived.ToString().ToLower());
+            data.Add("deleteFiltered", deleteFiltered.ToString().ToLower());
+            data.Add("deleteSent", deleteSent.ToString().ToLower());
+            data.Add("deleteErrored", deleteErrored.ToString().ToLower());
+            var r = connection.ExecutPostMethod(CHANNEL_STATISTICS_SERVLET, data);
+            return r;
+        }
+
         public ServerSettings GetServerSettings()
         {
             var data = new Parameters();
@@ -368,5 +394,6 @@ namespace MirthDotNet
 
         public ServerLog ServerLog { get; private set; }
         public DashboardConnectorStatus DashboardConnectorStatus { get; private set; }
+        public ChannelHistory ChannelHistory { get; private set; }
     }
 }
