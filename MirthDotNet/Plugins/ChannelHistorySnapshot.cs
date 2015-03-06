@@ -8,6 +8,7 @@ using MirthDotNet.Model;
 namespace MirthDotNet.Plugins
 {
     [Serializable]
+    [XmlRoot("com.mirth.connect.plugins.history.model.Snapshot")]
     public class ChannelHistorySnapshot
     {
         [XmlElement("id")]
@@ -20,5 +21,7 @@ namespace MirthDotNet.Plugins
         public int UserId { get; set; }
         [XmlElement("dateCreated")]
         public MirthDateTime DateCreated { get; set; }
+        [XmlElement("channel")]
+        public string Channel { get; set; }
     }
 }
