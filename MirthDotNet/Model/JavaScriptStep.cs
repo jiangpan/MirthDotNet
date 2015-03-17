@@ -15,7 +15,7 @@ namespace MirthDotNet.Model
         [XmlElement("name")]
         public string Name { get; set; }
         [XmlElement("type")]
-        public string type { get; set; }
+        public string Type { get; set; }
         [XmlElement("script")]
         public string Script { get; set; }
         [XmlElement("operator")]

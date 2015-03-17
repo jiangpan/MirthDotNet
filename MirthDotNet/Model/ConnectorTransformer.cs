@@ -14,12 +14,12 @@ namespace MirthDotNet.Model
 
         [XmlElement("inboundTemplate")]
         public string InboundTemplateBase64 { get; set; }
-        [XmlElement("InboundDataType")]
+        [XmlElement("inboundDataType")]
         public string InboundDataType { get; set; }
 
+        [XmlElement("outboundTemplate")]
+        public string OutboundTemplateBase64 { get; set; }
         [XmlElement("outboundDataType")]
-        public string OutboundDataTypeBase64 { get; set; }
-        [XmlElement("OutboundDataType")]
         public string OutboundDataType { get; set; }
     }
 }
